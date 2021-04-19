@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#! /usr/bin/env python3
 """Find duplicates from bitwarden export and present them in as a html website"""
 # %% Imports
 import json

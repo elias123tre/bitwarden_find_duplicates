@@ -1,2 +1,2 @@
-#!/bin/bash
+#! /bin/bash
 python bitwarden.py
