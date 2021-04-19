@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <script src="https://unpkg.com/vue@next"></script> -->
+    <script src="https://unpkg.com/vue@^3/dist/vue.global.prod.js"></script>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="https://github.com/bitwarden/brand/raw/master/icons/128x128.png"
+        type="image/x-icon">
+    <title>Bitwarden find duplicates</title>
+</head>
+
+<body>
+    <div class="space-y-6 pb-8" id="main">
+        <header class="sticky top-0 py-8 bg-white border-b-2 shadow-md" ref="header">
+            <div class="flex px-4 container mx-auto space-x-4 justify-between">
+                <div class="space-y-4">
+                    <h1 class="text-4xl">Bitwarden find duplicates</h1>
+                    <p>Below is a list of duplicate logins based on domain, from bitwarden export.</p>
+                    <div class="flex gap-4 items-end flex-wrap">
+                        <div class="w-full sm:w-auto">
+                            <label for="search" class="block">
+                                Go to domain:
+                            </label>
+                            <input class="px-2 py-1 border-2 border-gray-700 w-full" type="text" id="search"
+                                name="search" @change="gotoHash($event)" @keyup.enter="gotoHash($event)">
+                        </div>
+
+                        <div class="flex space-x-4">
+                            <button class="py-2 px-3 bg-gray-300 focus:ring focus:outline-none"
+                                @click="clearLocal(), $event.target.blur()">Show all items</button>
+                            <button class="py-2 px-3 bg-gray-300 focus:ring focus:outline-none"
+                                @click="fillLocal(), $event.target.blur()">Hide all items</button>
+                        </div>
+                    </div>
+                </div>
+
+                <a class="hidden sm:flex items-center" href="https://bitwarden.com/" target="_blank"
+                    rel="noopener noreferrer">
+                    <img class="object-contain" src="https://github.com/bitwarden/brand/raw/master/icons/128x128.png"
+                        alt="Bitwarden Logo">
+                </a>
+        </header>
+
+        <main class="space-y-4 px-4 container mx-auto">
+            <article v-for="(duplicates, domain) in logins" :key="domain">
+                <h2 class="text-2xl flex justify-between" :class="{'line-through': storage.indexOf(domain) >= 0}"
+                    :id="domain">
+                    <div class="flex space-x-2 items-center">
+                        <a :href="'http://' + domain" target="_blank" rel="noopener noreferrer"
+                            class="hover:text-indigo-700">
+                            {{domain}}
+                        </a>
+                        <button class="hover:text-indigo-700" @click="setStorage(domain)">
+                            <svg v-if="storage.indexOf(domain) >= 0" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                            <svg v-if="storage.indexOf(domain) < 0" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+                            </svg>
+                        </button>
+                    </div>
+                    <a :href="'#' + domain">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                        </svg>
+                    </a>
+                </h2>
+                <hr>
+
+                <div class="flex space-x-16 overflow-x-auto py-1" :class="{'hidden': storage.indexOf(domain) >= 0}">
+                    <div class="space-y-2" v-for="item in duplicates">
+                        <div v-if="item.name">
+                            <small class="text-gray-600">Name:</small>
+                            <div class="select-all cursor-auto whitespace-nowrap">{{item.name}}</div>
+                        </div>
+                        <div v-if="item.username">
+                            <small class="text-gray-600">Username:</small>
+                            <div class="select-all cursor-auto whitespace-nowrap">{{item.username}}</div>
+                        </div>
+                        <div v-if="item.password">
+                            <small class="text-gray-600">Password:</small>
+                            <div class="select-all cursor-auto whitespace-nowrap">{{item.password}}</div>
+                        </div>
+                        <div v-if="item.domains">
+                            <small class="text-gray-600">Domains:</small>
+                            <div class="select-all cursor-auto whitespace-nowrap truncate max-w-xs"
+                                :title="(item.domains ?? []).join(', ')">{{(item.domains ??
+                                []).join(", ")}}</div>
+                        </div>
+                        <div v-if="item.fields">
+                            <small class="text-gray-600">Fields:</small>
+                            <div class="select-all cursor-auto whitespace-nowrap">
+                                <div v-for="field in item.fields ?? []">
+                                    {{field.name}}: {{field.value}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </main>
+    </div>
+
+    <script src="logins.js"></script>
+    <script>
+        const Counter = {
+            data() {
+                return {
+                    logins: logins,
+                    storage: []
+                }
+            },
+            methods: {
+                gotoHash(event) {
+                    window.location.hash = '#' + event.target.value
+                },
+                clearLocal() {
+                    localStorage.clear()
+                    this.updateStorage()
+                },
+                fillLocal() {
+                    Object.keys(this.logins).map((domain) => localStorage.setItem(domain, "done"))
+                    this.updateStorage()
+                },
+                setStorage(domain) {
+                    if (localStorage.getItem(domain)) {
+                        localStorage.removeItem(domain)
+                    } else {
+                        localStorage.setItem(domain, "done")
+                    }
+                    this.updateStorage()
+                },
+                updateStorage() {
+                    this.storage = Object.keys(localStorage)
+                }
+            },
+            mounted() {
+                let headerHeight = this.$refs.header.clientHeight
+                document.documentElement.style.scrollPaddingTop = `${headerHeight + 16}px`
+                document.documentElement.style.scrollBehavior = "smooth"
+
+                this.updateStorage()
+            }
+        }
+        Vue.createApp(Counter).mount("#main")
+    </script>
+</body>
+
+</html>
