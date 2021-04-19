@@ -23,7 +23,7 @@ if not filename:
 
 # %% Get items and folders from file
 with open(filename, encoding="utf-8") as f:
-    data: dict[list[dict]] = json.load(f)
+    data = json.load(f)
     folders = data.get("folders", [])
     items = data.get("items", [])
 
@@ -42,7 +42,7 @@ def domains(entry):
     def transform(url):
         match = re.match(r"(\w+:\/\/)?([\w.]+)(\/?.*)", url)
         if match:
-            return ".".join(match.group(2).removeprefix("www.").split(".")[-2:])
+            return ".".join(match.group(2).split(".")[-2:])
         return ""
     return set(filter(None, (transform(uri.get("uri")) for uri in entry.get("uris", []))))
 

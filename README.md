@@ -13,6 +13,11 @@ python bitwarden.py
 
 Then choose your Bitwarden json export (needs to be unencrypted :c ) and it will open a nice looking website presenting the duplicates in your browser.
 
+## Requirements
+
+- Python 3.7 at least
+- Modern browser (tested with Firefox 88 and Chrome 86)
+
 ## Demonstration
 
 ![Demonstration](https://i.imgur.com/PlXPOCT.png)
