@@ -5,21 +5,28 @@ import json
 import os
 import re
 import sys
-from tkinter import Tk
-from tkinter.filedialog import askopenfilename
+import webbrowser
 
 from dupfinder import dups_uris
 
 # %% Select a file
-Tk().withdraw()  # Hide empty window
-filename = askopenfilename(**{
-    "title": "Select your Bitwarden export file (.json extension)",
-    "filetypes": [("Bitwarden export", "*.json")],
-    "initialdir": os.getcwd()
-})
-if not filename:
-    print("Error: no file selected.")
-    sys.exit(1)
+if sys.argv[1:]:
+    filename = sys.argv[1]
+else:
+    try:
+        from tkinter import Tk
+        from tkinter.filedialog import askopenfilename
+        Tk().withdraw()  # Hide empty window
+        filename = askopenfilename(**{
+            "title": "Select your Bitwarden export file (.json extension)",
+            "filetypes": [("Bitwarden export", "*.json")],
+            "initialdir": os.getcwd()
+        })
+    except ImportError:
+        print("You don't have tkinter installed install it with `pip install tkinter`")
+        print("Otherwise provide path to bitwarden export as an argument")
+        print("Example: `python bitwarden.py bitwarden_export.json`")
+        sys.exit(1)
 
 # %% Get items and folders from file
 with open(filename, encoding="utf-8") as f:
@@ -57,4 +64,4 @@ with open("logins.js", "w", encoding='utf-8') as f:
     f.write("')")
 
 # %% Open in visual html file
-os.startfile("index.html")
+webbrowser.open("index.html")
