@@ -27,11 +27,15 @@ else:
         print("Otherwise provide path to bitwarden export as an argument")
         print("Example: `python bitwarden.py bitwarden_export.json`")
         sys.exit(1)
+if not filename:
+    print("No file selected. Quitting.")
+    sys.exit(1)
 
 # %% Get items and folders from file
 with open(filename, encoding="utf-8") as f:
     data = json.load(f)
-    folders = data.get("folders", [])
+    folders = {folder.get("id"): folder.get("name")
+               for folder in data.get("folders", []) if folder.get("id")}
     items = data.get("items", [])
 
 # %% Expand login descendats (make username & password top level)
@@ -58,9 +62,13 @@ def domains(entry):
 duplicates = dups_uris(items, func=domains)
 
 with open("logins.js", "w", encoding='utf-8') as f:
-    data = json.dumps(duplicates, sort_keys=True)
+    items_data = json.dumps(duplicates, sort_keys=True)
+    folder_data = json.dumps(folders, sort_keys=True)
+    f.write("const folders = JSON.parse('")
+    f.write(re.escape(folder_data))
+    f.write("')\n")
     f.write("const logins = JSON.parse('")
-    f.write(re.escape(data))
+    f.write(re.escape(items_data))
     f.write("')")
 
 # %% Open in visual html file

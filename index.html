@@ -12,6 +12,11 @@
     <link rel="shortcut icon" href="https://github.com/bitwarden/brand/raw/master/icons/128x128.png"
         type="image/x-icon">
     <title>Bitwarden find duplicates</title>
+    <style>
+        .min-h-1\.5 {
+            min-height: 1.5em;
+        }
+    </style>
 </head>
 
 <body>
@@ -82,27 +87,32 @@
 
                 <div class="flex space-x-16 overflow-x-auto py-1" :class="{'hidden': storage.indexOf(domain) >= 0}">
                     <div class="space-y-2" v-for="item in duplicates">
-                        <div v-if="item.name">
+                        <div>
                             <small class="text-gray-600">Name:</small>
-                            <div class="select-all cursor-auto whitespace-nowrap">{{item.name}}</div>
+                            <div class="min-h-1.5 select-all cursor-auto whitespace-nowrap">{{item.name}}</div>
                         </div>
-                        <div v-if="item.username">
+                        <div>
                             <small class="text-gray-600">Username:</small>
-                            <div class="select-all cursor-auto whitespace-nowrap">{{item.username}}</div>
+                            <div class="min-h-1.5 select-all cursor-auto whitespace-nowrap">{{item.username}}</div>
                         </div>
-                        <div v-if="item.password">
+                        <div>
                             <small class="text-gray-600">Password:</small>
-                            <div class="select-all cursor-auto whitespace-nowrap">{{item.password}}</div>
+                            <div class="min-h-1.5 select-all cursor-auto whitespace-nowrap">{{item.password}}</div>
                         </div>
-                        <div v-if="item.domains">
+                        <div>
                             <small class="text-gray-600">Domains:</small>
-                            <div class="select-all cursor-auto whitespace-nowrap truncate max-w-xs"
+                            <div class="min-h-1.5 select-all cursor-auto whitespace-nowrap truncate max-w-xs"
                                 :title="(item.domains ?? []).join(', ')">{{(item.domains ??
                                 []).join(", ")}}</div>
                         </div>
+                        <div>
+                            <small class="text-gray-600">Folder:</small>
+                            <div class="min-h-1.5 select-all cursor-auto whitespace-nowrap">{{folders[item.folderId]}}
+                            </div>
+                        </div>
                         <div v-if="item.fields">
                             <small class="text-gray-600">Fields:</small>
-                            <div class="select-all cursor-auto whitespace-nowrap">
+                            <div class="min-h-1.5 select-all cursor-auto whitespace-nowrap">
                                 <div v-for="field in item.fields ?? []">
                                     {{field.name}}: {{field.value}}
                                 </div>
@@ -120,6 +130,7 @@
             data() {
                 return {
                     logins: logins,
+                    folders: folders,
                     storage: []
                 }
             },
