@@ -64,8 +64,9 @@ duplicates = dups_uris(items, func=domains)
 with open("logins.js", "w", encoding='utf-8') as f:
     data = json.dumps(duplicates, sort_keys=True)
     f.write("const logins = JSON.parse(`{}`)".format(re.escape(data)))
-    folders = json.dumps(folders, sort_keys=True)
-    f.write("const folders = JSON.parse(`{}`)".format(re.escape(folders)))
+    f.write("\n\n")
+    folders_str = json.dumps(folders, sort_keys=True)
+    f.write("const folders = JSON.parse(`{}`)".format(re.escape(folders_str)))
 
 # %% Open in visual html file
 webbrowser.open("index.html")
