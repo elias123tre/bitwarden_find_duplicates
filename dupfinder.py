@@ -30,8 +30,7 @@ def dups_sort(items, func):
     ! DEPRECATED: NOT WORKING
     """
     items.sort(key=func)
-    duplicates = [(k, [itemrepr(e) for e in g])
-                  for k, g in groupby(items, key=func)]
+    duplicates = [(k, [itemrepr(e) for e in g]) for k, g in groupby(items, key=func)]
     duplicates = [(dom, ents) for dom, ents in duplicates if len(ents) > 1]
     return duplicates
 
@@ -45,7 +44,11 @@ def dups_seen(items, func):
         uris = func(item)
         if any(uri in seen for uri in uris):
             print("Duplicate:")
-            yield {k: v for k, v in item.items() if k in ("name", "username", "password", "fields")}
+            yield {
+                k: v
+                for k, v in item.items()
+                if k in ("name", "username", "password", "fields")
+            }
             print()
         for uri in uris:
             seen.add(uri)

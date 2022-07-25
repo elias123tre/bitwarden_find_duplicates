@@ -16,9 +16,11 @@ Then choose your Bitwarden json export (needs to be unencrypted :c ) and it will
 _or_
 
 Specify file path manually:
+
 ```terminal
 python bitwarden.py bitwarden_export.json
 ```
+
 Where `bitwarden_export.json` is the path to your export.
 
 ## Requirements

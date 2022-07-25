@@ -16,12 +16,15 @@ else:
     try:
         from tkinter import Tk
         from tkinter.filedialog import askopenfilename
+
         Tk().withdraw()  # Hide empty window
-        filename = askopenfilename(**{
-            "title": "Select your Bitwarden export file (.json extension)",
-            "filetypes": [("Bitwarden export", "*.json")],
-            "initialdir": os.getcwd()
-        })
+        filename = askopenfilename(
+            **{
+                "title": "Select your Bitwarden export file (.json extension)",
+                "filetypes": [("Bitwarden export", "*.json")],
+                "initialdir": os.getcwd(),
+            }
+        )
     except ImportError:
         print("You don't have tkinter installed install it with `pip install tkinter`")
         print("Otherwise provide path to bitwarden export as an argument")
@@ -34,8 +37,11 @@ if not filename:
 # %% Get items and folders from file
 with open(filename, encoding="utf-8") as f:
     data = json.load(f)
-    folders = {folder.get("id"): folder.get("name")
-               for folder in data.get("folders", []) if folder.get("id")}
+    folders = {
+        folder.get("id"): folder.get("name")
+        for folder in data.get("folders", [])
+        if folder.get("id")
+    }
     items = data.get("items", [])
 
 # %% Expand login descendats (make username & password top level)
@@ -50,18 +56,22 @@ items = [i for i in items if i.get("type") == 1]
 # %% Define uri cleaning function
 def domains(entry):
     """Get domains from login"""
+
     def transform(url):
         match = re.match(r"(\w+:\/\/)?([\w.]+)(\/?.*)", url)
         if match:
             return ".".join(match.group(2).split(".")[-2:])
         return ""
-    return set(filter(None, (transform(uri.get("uri")) for uri in entry.get("uris", []))))
+
+    return set(
+        filter(None, (transform(uri.get("uri")) for uri in entry.get("uris", [])))
+    )
 
 
 # %% Write object to file
 duplicates = dups_uris(items, func=domains)
 
-with open("logins.js", "w", encoding='utf-8') as f:
+with open("logins.js", "w", encoding="utf-8") as f:
     data = json.dumps(duplicates, sort_keys=True)
     f.write("const logins = JSON.parse(`{}`)".format(re.escape(data)))
     f.write("\n\n")
