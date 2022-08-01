@@ -7,7 +7,13 @@ _**New feature in v1.2.0:** added exact identical duplicates detection._
 
 ## How to use
 
-Run the `bitwarden.py` file:
+**Prerequisites:**
+
+- Have python 3.7 at least installed
+- Clone the repository (or download and extract ZIP)
+- `cd` into repository folder
+
+Run the `bitwarden.py` file with python:
 
 ```terminal
 python bitwarden.py
