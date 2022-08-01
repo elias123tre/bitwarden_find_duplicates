@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <script src="https://unpkg.com/vue@next"></script> -->
     <script src="https://unpkg.com/vue@3.2.37/dist/vue.global.prod.js"></script>
     <link href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
@@ -32,7 +31,7 @@
                                 Go to domain:
                             </label>
                             <input class="px-2 py-1 border-2 border-gray-700 w-full" type="text" id="search"
-                                name="search" @change="gotoHash($event)" @keyup.enter="gotoHash($event)">
+                                name="search" @input="gotoHash($event)" @keyup.enter="gotoHash($event)">
                         </div>
 
                         <div class="flex space-x-4">
@@ -44,7 +43,7 @@
                     </div>
                 </div>
 
-                <a class="hidden sm:flex items-center" href="https://bitwarden.com/" target="_blank"
+                <a class="hidden sm:flex items-center" href="https://vault.bitwarden.com/" target="_blank" title="Bitwarden vault"
                     rel="noopener noreferrer">
                     <img class="object-contain" src="https://github.com/bitwarden/brand/raw/master/icons/128x128.png"
                         alt="Bitwarden Logo">
@@ -126,7 +125,7 @@
 
     <script src="logins.js"></script>
     <script>
-        const Counter = {
+        const dupfinder = {
             data() {
                 return {
                     logins: logins,
@@ -166,7 +165,7 @@
                 this.updateStorage()
             }
         }
-        Vue.createApp(Counter).mount("#main")
+        Vue.createApp(dupfinder).mount("#main")
     </script>
 </body>
 
