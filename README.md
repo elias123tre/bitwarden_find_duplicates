@@ -1,7 +1,7 @@
 # Bitwarden Find Duplicates
 
 Find duplicate logins based on domain, from bitwarden export.
-Open source for your safety, read source before executing.
+Open source for your safety, read through before executing.
 
 ## How to use
 
