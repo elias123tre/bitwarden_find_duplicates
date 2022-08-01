@@ -3,6 +3,8 @@
 Find duplicate logins based on domain, from bitwarden export.
 Open source for your safety, read through before executing.
 
+_**New feature in v1.2.0:** added exact identical duplicates detection._
+
 ## How to use
 
 Run the `bitwarden.py` file:
