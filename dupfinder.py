@@ -1,6 +1,46 @@
 """Different algorithms for finding duplicates"""
 from itertools import groupby
 
+KEYS = [
+    "name",
+    "notes",
+    "favorite",
+    "folderId",
+    "organizationId",
+    "reprompt",
+    "totp",
+    "type",
+    "username",
+    "password",
+]
+
+
+def hashable(login) -> tuple:
+    """Hashable tuple of a login"""
+    return tuple(
+        [
+            *[login[key] for key in KEYS],
+            "\n".join(login["domains"]),
+            "\n".join(
+                f'{field["name"]}: {field["value"]}'
+                for field in login.get("fields", [])
+            ),
+        ]
+    )
+
+
+def identical_duplicates(logins):
+    """Get a dictionary of hash key and its identical duplicate (always last one)"""
+    seen = set()
+    dupes = {}
+    for login in logins:
+        tup = hashable(login)
+        if tup in seen:
+            dupes[tup] = login
+        else:
+            seen.add(tup)
+    return dupes
+
 
 def itemrepr(entry, keys=("name", "username", "password", "fields")):
     """Simple representation of login item"""

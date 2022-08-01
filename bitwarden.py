@@ -1,13 +1,14 @@
 #! /usr/bin/env python3
 """Find duplicates from bitwarden export and present them in as a html website"""
 # %% Imports
+from itertools import chain
 import json
 import os
 import re
 import sys
 import webbrowser
 
-from dupfinder import dups_uris
+from dupfinder import dups_uris, identical_duplicates
 
 # %% Select a file
 if sys.argv[1:]:
@@ -71,7 +72,14 @@ def domains(entry):
 # %% Write object to file
 duplicates = dups_uris(items, func=domains)
 
+identical = {}
+for domain in duplicates.values():
+    identical.update(identical_duplicates(domain))
+
 with open("logins.js", "w", encoding="utf-8") as f:
+    ident_dupes = json.dumps(list(identical.values()), sort_keys=True)
+    f.write("const identical = {}".format(ident_dupes))
+    f.write("\n\n")
     data = json.dumps(duplicates, sort_keys=True)
     f.write("const logins = {}".format(data))
     f.write("\n\n")
