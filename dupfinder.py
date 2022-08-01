@@ -1,5 +1,4 @@
 """Different algorithms for finding duplicates"""
-from itertools import groupby
 
 KEYS = [
     "name",
