@@ -196,7 +196,7 @@
                   {{folders[item.folderId]}}
                 </div>
               </div>
-              <div v-if="item.fields">
+              <div v-if="item.fields && item.fields.length">
                 <small class="text-gray-600">Fields:</small>
                 <div class="min-h-1.5 select-all cursor-auto whitespace-nowrap">
                   <div v-for="field in item.fields ?? []">
@@ -350,7 +350,7 @@
                     {{folders[item.folderId]}}
                   </div>
                 </div>
-                <div v-if="item.fields">
+                <div v-if="item.fields && item.fields.length">
                   <small class="text-gray-600">Fields:</small>
                   <div
                     class="min-h-1.5 select-all cursor-auto whitespace-nowrap"
