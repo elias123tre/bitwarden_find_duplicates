@@ -19,11 +19,9 @@ else:
 
         Tk().withdraw()  # Hide empty window
         filename = askopenfilename(
-            **{
-                "title": "Select your Bitwarden export file (.json extension)",
-                "filetypes": [("Bitwarden export", "*.json")],
-                "initialdir": os.getcwd(),
-            }
+            title="Select your Bitwarden export file (.json extension)",
+            filetypes=[("Bitwarden export", "*.json")],
+            initialdir=os.getcwd(),
         )
     except ImportError:
         print("You don't have tkinter installed install it with `pip install tkinter`")
@@ -58,13 +56,15 @@ def domains(entry):
     """Get domains from login"""
 
     def transform(url):
+        if not url:
+            return ""
         match = re.match(r"(\w+:\/\/)?([\w.]+)(\/?.*)", url)
         if match:
             return ".".join(match.group(2).split(".")[-2:])
         return ""
 
     return set(
-        filter(None, (transform(uri.get("uri")) for uri in entry.get("uris", [])))
+        filter(None, (transform(uri.get("uri", "")) for uri in entry.get("uris", [])))
     )
 
 
@@ -77,13 +77,13 @@ for domain in duplicates.values():
 
 with open("logins.js", "w", encoding="utf-8") as f:
     ident_dupes = json.dumps(list(identical.values()), sort_keys=True)
-    f.write("const identical = {}".format(ident_dupes))
+    f.write(f"const identical = {ident_dupes}")
     f.write("\n\n")
     data = json.dumps(duplicates, sort_keys=True)
-    f.write("const logins = {}".format(data))
+    f.write(f"const logins = {data}")
     f.write("\n\n")
     folders_str = json.dumps(folders, sort_keys=True)
-    f.write("const folders = {}".format(folders_str))
+    f.write(f"const folders = {folders_str}")
 
 # %% Open in visual html file
 webbrowser.open("index.html")
