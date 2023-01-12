@@ -3,6 +3,7 @@
 # %% Imports
 import json
 import os
+from pathlib import Path
 import re
 import sys
 import webbrowser
@@ -24,7 +25,10 @@ else:
             initialdir=os.getcwd(),
         )
     except ImportError:
-        print("You don't have tkinter installed install it with `pip install tkinter`")
+        print(
+            "You don't have tkinter installed or it is not working, "
+            "install it with `pip install tkinter` or `pip3 install tkinter`"
+        )
         print("Otherwise provide path to bitwarden export as an argument")
         print("Example: `python bitwarden.py bitwarden_export.json`")
         sys.exit(1)
@@ -85,5 +89,10 @@ with open("logins.js", "w", encoding="utf-8") as f:
     folders_str = json.dumps(folders, sort_keys=True)
     f.write(f"const folders = {folders_str}")
 
-# %% Open in visual html file
+# %% Try open in visual html file
+print("Trying to open the GUI your preferred browser...")
+print(
+    f'If it doesn\'t open by itself, open "file:///{Path("index.html").resolve()}" manually in any browser'
+)
+
 webbrowser.open("index.html")
