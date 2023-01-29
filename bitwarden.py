@@ -91,8 +91,7 @@ with open("logins.js", "w", encoding="utf-8") as f:
 
 # %% Try open in visual html file
 print("Trying to open the GUI your preferred browser...")
-print(
-    f'If it doesn\'t open by itself, open "file:///{Path("index.html").resolve()}" manually in any browser'
-)
+filepath = Path("index.html").resolve().as_uri()
+print(f"If it doesn't open by itself, open {filepath} manually in any browser")
 
-webbrowser.open("index.html")
+webbrowser.open(filepath)
