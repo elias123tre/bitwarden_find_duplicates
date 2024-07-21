@@ -27,6 +27,14 @@ Always read through webpages and scripts before you open them as you are handlin
 
 > Tip: you can upload your new updated Bitwarden export file again to further remove duplicates.
 
+## Run the hosted index.html file from GitHub Pages)
+
+0. Export your Bitwarden vault under *Tools -> Export Vault* to a `.json` file (**NOT** the encrypted one).
+
+1. Go to https://elias123tre.github.io/bitwarden_find_duplicates/ (hosted on GitHub Pages, mirrors the exact [`index.html`](https://github.com/elias123tre/bitwarden_find_duplicates/blob/master/index.html) file in this repository's main branch).
+
+3. Do steps **3-8** from the instructions above.
+
 ## Alternatives
 
 - [Bitwarden-Vault-Cleaner](https://github.com/qyqsoft/Bitwarden-Vault-Cleaner)
