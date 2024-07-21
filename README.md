@@ -35,6 +35,10 @@ Always read through webpages and scripts before you open them as you are handlin
 
 3. Do steps **3-8** from the instructions above.
 
+## Demo
+
+![Screenshot 2024-07-22 005008](https://github.com/user-attachments/assets/e5d5f1bc-96ec-449c-8e96-59ea429d210b)
+
 ## Alternatives
 
 - [Bitwarden-Vault-Cleaner](https://github.com/qyqsoft/Bitwarden-Vault-Cleaner)
