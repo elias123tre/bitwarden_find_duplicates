@@ -37,4 +37,5 @@ Always read through webpages and scripts before you open them as you are handlin
 ## Discussions
 
 - [Official forum post for a duplicate removal feature](https://community.bitwarden.com/t/duplicate-removal-tool-report-including-merge/648) (you can find more scripts and alternatives there)
+- [General Reddit discussion on different ways to remove duplicates in Bitwarden](https://www.reddit.com/r/Bitwarden/comments/sdxzpd/what_is_the_best_way_to_remove_duplicates_from_my/)
 - [Reddit thread for a script that solves this](https://www.reddit.com/r/Bitwarden/comments/aon967/bitwarden_duplicate_entries_remover/)
