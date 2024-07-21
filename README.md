@@ -9,7 +9,7 @@ Always read through webpages and scripts before you open them as you are handlin
 
 0. Export your Bitwarden vault under *Tools -> Export Vault* to a `.json` file (**NOT** the encrypted one).
 
-1. Download the file [`index.html`](https://github.com/elias123tre/bitwarden_find_duplicates/blob/master/index.html) (see "Download raw file" in the top right corner).
+1. Download the file [`index.html`](https://github.com/elias123tre/bitwarden_find_duplicates/blob/main/index.html) (see "Download raw file" in the top right corner).
 
 2. Open it in your preferred browser.
 
@@ -31,7 +31,7 @@ Always read through webpages and scripts before you open them as you are handlin
 
 0. Export your Bitwarden vault under *Tools -> Export Vault* to a `.json` file (**NOT** the encrypted one).
 
-1. Go to https://elias123tre.github.io/bitwarden_find_duplicates/ (hosted on GitHub Pages, mirrors the exact [`index.html`](https://github.com/elias123tre/bitwarden_find_duplicates/blob/master/index.html) file in this repository's main branch).
+1. Go to https://elias123tre.github.io/bitwarden_find_duplicates/ (hosted on GitHub Pages, mirrors the exact [`index.html`](https://github.com/elias123tre/bitwarden_find_duplicates/blob/main/index.html) file in this repository's main branch).
 
 3. Do steps **3-8** from the instructions above.
 
