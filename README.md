@@ -1,41 +1,40 @@
-# Bitwarden Find Duplicates
+# Bitwarden Password Analyzer
 
-Find duplicate logins based on domain, from bitwarden export.
-Open source for your safety, read through before executing.
+> This is a complete rewrite that just contains an HTML file and uses JavaScript for removing the duplaces. For the old version see the branch [html-generator-python](https://github.com/elias123tre/bitwarden_find_duplicates/tree/html-generator-python).
 
-_**New feature in v1.2.0:** added exact identical duplicates detection._
+Find duplicate logins based on domain, from Bitwarden export.
+Always read through webpages and scripts before you open them as you are handling sensitive information.
 
 ## How to use
 
-**Prerequisites:**
+0. Export your Bitwarden vault under *Tools -> Export Vault* to a `.json` file (**NOT** the encrypted one).
 
-- Have python 3.7 at least installed
-- Clone the repository (or download and extract ZIP)
-- `cd` into repository folder
+1. Download the file [`index.html`](https://github.com/elias123tre/bitwarden_find_duplicates/blob/master/index.html) (see "Download raw file" in the top right corner).
 
-Run the `bitwarden.py` file with python:
+2. Open it in your preferred browser.
 
-```terminal
-python bitwarden.py
-```
+3. Open your Bitwarden export file on the page.
 
-Then choose your Bitwarden json export (needs to be unencrypted :c ) and it will open a nice looking website presenting the duplicates in your browser.
+4. Delete the duplicate entries.
 
-_or_
+5. Download the updated Bitwarden export file (with the removed logins deleted).
 
-Specify file path manually:
+6. Delete your Bitwarden vault under *Settings -> My account -> Empty vault* (at the bottom of the danger zone). THIS WILL DELETE ALL YOUR PASSWORDS IN BITWARDEN, MAKE SURE YOU HAVE AT LEAST ONE EXPORT OR BACKUP!
 
-```terminal
-python bitwarden.py bitwarden_export.json
-```
+7. Import the updated file into Bitwarden under *Tools -> Import data -> Bitwarden (json)*.
 
-Where `bitwarden_export.json` is the path to your export.
+8. IMPORTANT: Delete all created json files as they contain all your passwords in plain text (they can be read by any program or user!). It is best to open them with an editor (notepad for example), delete the contents and overwrite them again before you move them to the trash.
 
-## Requirements
+> Tip: you can upload your new updated Bitwarden export file again to further remove duplicates.
 
-- Python 3.7 at least
-- Modern browser (tested with Firefox 88 and Chrome 86)
+## Alternatives
 
-## Demonstration
+- [Bitwarden-Vault-Cleaner](https://github.com/qyqsoft/Bitwarden-Vault-Cleaner)
+- [bitwarden_duplicate_cleaner.py](https://gist.github.com/jwmcgettigan/0bf7cd39947764896735997056ca74d7)
+- [bitwarden-deduplicate](https://gitlab.com/sundbp/bitwarden-deduplicate)
+- [bwclean2.py](https://gist.github.com/serif/a1281c676cf5a1f77af6ff1a25255a85)
 
-![Demonstration](https://i.imgur.com/PlXPOCT.png)
+## Discussions
+
+- [Official forum post for a duplicate removal feature](https://community.bitwarden.com/t/duplicate-removal-tool-report-including-merge/648) (you can find more scripts and alternatives there)
+- [Reddit thread for a script that solves this](https://www.reddit.com/r/Bitwarden/comments/aon967/bitwarden_duplicate_entries_remover/)
