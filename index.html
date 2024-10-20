@@ -89,7 +89,12 @@
           }
           const parts = hostname.split(".")
           if (parts.length > 2) {
-            return parts.slice(-2).join(".")
+            //is this really the "useable domain", or a second-level domain like .co.uk?
+            const domainOrSld = parts.slice(-2).join(".")
+            if (domainOrSld.match(/(com|co|org|gov|edu)\.\w{2}/)) {
+                return parts.slice(-3).join(".")
+            }
+            return domainOrSld
           }
           return hostname
         } catch (error) {
@@ -290,7 +295,7 @@
         }
         const updatedFileName = `${baseName}.${extension}` // Reconstruct the file name with the updated part
         downloadAnchorNode.setAttribute("download", updatedFileName)
-        
+
         document.body.appendChild(downloadAnchorNode)
         downloadAnchorNode.click()
         downloadAnchorNode.remove()
