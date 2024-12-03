@@ -9,7 +9,7 @@ Always read through webpages and scripts before you open them as you are handlin
 
 0. Export your Bitwarden vault under *Tools -> Export Vault* to a `.json` file (**NOT** the encrypted one).
 
-1. Download the file [`index.html`](https://github.com/elias123tre/bitwarden_find_duplicates/blob/main/index.html) (see "Download raw file" in the top right corner).
+1. Download the file [`index.html`](https://github.com/eliasfloreteng/bitwarden_find_duplicates/blob/main/index.html) (see "Download raw file" in the top right corner).
 
 2. Open it in your preferred browser.
 
