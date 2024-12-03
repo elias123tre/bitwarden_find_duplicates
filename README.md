@@ -1,6 +1,6 @@
 # Bitwarden Password Analyzer
 
-> This is a complete rewrite that just contains an HTML file and uses JavaScript for removing the duplaces. For the old version see the branch [html-generator-python](https://github.com/elias123tre/bitwarden_find_duplicates/tree/html-generator-python).
+> This is a complete rewrite that just contains an HTML file and uses JavaScript for removing the duplicates. For the old version see the branch [html-generator-python](https://github.com/elias123tre/bitwarden_find_duplicates/tree/html-generator-python).
 
 Find duplicate logins based on domain, from Bitwarden export.
 Always read through webpages and scripts before you open them as you are handling sensitive information.
